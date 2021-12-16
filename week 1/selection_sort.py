@@ -1,39 +1,35 @@
-#!/bin/python3
+#User function Template for python3
 
-import math
-import os
-import random
-import re
-import sys
+class Solution: 
+    def select(self, arr, i):
+        # code here
+          print(*selectionSort(self,arr))
+    
+    def selectionSort(self, li,n):
+        #code here
+        for i in range(len(li)):
+            if i+1 == len(li):
+                return li
+            crnt_min = li[i]
+            rest_min = min(li[i+1::])
 
-#
-# Complete the 'insertionSort1' function below.
-#
-# The function accepts following parameters:
-#  1. INTEGER n
-#  2. INTEGER_ARRAY arr
-#
+            if rest_min < crnt_min:
+                rest_index = li[i+1:].index(rest_min) + len(li[:i+1])
+                li[i] = rest_min
+                li[rest_index] = crnt_min
+        return li
 
-def insertionSort1(n, li):
-    crnt_value = li[-1]
-    crnt_index = n-1
-    for j in range(n):
-        compare_index = crnt_index - 1
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
 
-        if crnt_value < li[compare_index]:
-            li[crnt_index] = li[compare_index]
-            crnt_index -= 1
-            compare_index -= 1
-        print(*li)
-        if compare_index == -1 or crnt_value > li[compare_index]:
-            li[compare_index + 1] = crnt_value
-            print(*li)
-            break
-    # Write your code here
-
-if __name__ == '__main__':
-    n = int(input().strip())
-
-    arr = list(map(int, input().rstrip().split()))
-
-    insertionSort1(n, arr)
+if __name__ == '__main__': 
+    t = int(input())
+    for _ in range(t):
+        n = int(input())
+        arr = list(map(int, input().strip().split()))
+        Solution().selectionSort(arr, n)
+        for i in range(n):
+            print(arr[i],end=" ")
+        print()
+# } Driver Code Ends
