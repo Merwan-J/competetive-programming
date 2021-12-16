@@ -7,33 +7,24 @@ import re
 import sys
 
 #
-# Complete the 'insertionSort1' function below.
+# Complete the 'countingSort' function below.
 #
-# The function accepts following parameters:
-#  1. INTEGER n
-#  2. INTEGER_ARRAY arr
+# The function is expected to return an INTEGER_ARRAY.
+# The function accepts INTEGER_ARRAY arr as parameter.
 #
-
-def insertionSort1(n, li):
-    crnt_value = li[-1]
-    crnt_index = n-1
-    for j in range(n):
-        compare_index = crnt_index - 1
-
-        if crnt_value < li[compare_index]:
-            li[crnt_index] = li[compare_index]
-            crnt_index -= 1
-            compare_index -= 1
-        print(*li)
-        if compare_index == -1 or crnt_value > li[compare_index]:
-            li[compare_index + 1] = crnt_value
-            print(*li)
-            break
+n = input()
+li = input()
+li = list(map(lambda x: int(x),li.split(' ')))
+def countingSort(li):
     # Write your code here
+    new_li = [0 * i for i in range(max(li)+1)]
+    for i in set(li):
+        count = li.count(i)
+        new_li[i] = count
+    if len(new_li) != 100:
+        n = 100 - len(new_li) 
+        for i in range(n):
+            new_li.append(0)
+    print(*new_li[:101])
 
-if __name__ == '__main__':
-    n = int(input().strip())
-
-    arr = list(map(int, input().rstrip().split()))
-
-    insertionSort1(n, arr)
+countingSort(li)
