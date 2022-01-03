@@ -4,12 +4,9 @@ class Solution:
             crnt = s + '1' 
             s = [j for j in s]
             for l in range(len(s)):
-                if s[l] == "0":
-                    s[l] = "1"
-                else:
-                    s[l] = "0"
-                    
+                s[l] = "0" if s[l]=="1" else "1"
             s = crnt + "".join(s[::-1])
+            
             if i == n:
                 return s
             return recur(s,i+1)
