@@ -13,10 +13,6 @@ class Solution:
         nextnode = head
         
         while nextnode:
-            # if crntnode == nextnode.val:
-            #     nextnode = crntnode.next
-            #     crntnode.next = None
-            #     frontnode = crntnode
             crntnode = nextnode
             nextnode = crntnode.next
             crntnode.next = frontnode
