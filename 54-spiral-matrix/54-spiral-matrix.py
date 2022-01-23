@@ -43,10 +43,8 @@ class Solution:
             if len(matrix)==1:
                 last_row(start,end-1)
                 break
+                
             last_row(start,end)
-            # if len(column)==1:
-            #     first_column(start,end-1)
-            #     break
             first_column(start,end)
             start +=1
             end += 1
