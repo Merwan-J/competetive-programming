@@ -56,20 +56,24 @@ class Solution:
         result = []
         
         while l<r and t<b:
+#             go through the first row
             for i in range(l,r):
                 result.append(matrix[t][i])
             t+=1
-            
+#             then the last column
             for i in range(t,b):
                 result.append(matrix[i][r-1])
             r-=1
+            
+#             check for the conditions again 
             if not(l<r and t<b):
                 break
                 
+#                 go through the last row
             for i in range(r-1,l-1,-1):
                 result.append(matrix[b-1][i])
             b-=1
-            
+#               go through the first column
             for i in range(b-1,t-1,-1):
                 result.append(matrix[i][l])
             l+=1
