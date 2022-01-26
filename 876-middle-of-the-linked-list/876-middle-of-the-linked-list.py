@@ -6,19 +6,26 @@
 import math
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        firsthead = head
+#         firsthead = head
         
-        count = 0
-        while head.next:
-            head = head.next
-            count+=1
+#         count = 0
+#         while head.next:
+#             head = head.next
+#             count+=1
         
-        middle = (count+1)//2
-        count = 0
-        head = firsthead
-        while True:
-            if middle == count:
-                return head
-            head = head.next
-            count += 1
+#         middle = (count+1)//2
+#         count = 0
+#         head = firsthead
+#         while True:
+#             if middle == count:
+#                 return head
+#             head = head.next
+#             count += 1
+        fast = head
+        slow = head
+        
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
             
