@@ -18,14 +18,18 @@ class Solution:
                 while temp and head.val == temp.val:
                     head.next = temp.next
                     temp = temp.next
+                 
+#               egde case handling
                 if head==prev:
                     prev = head.next
                     headNode = prev
                     head = head.next
                     continue
                 prev.next = head.next
+                
             else:
                 prev = head
+                
             head = head.next
         return headNode
                 
