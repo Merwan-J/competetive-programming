@@ -13,12 +13,11 @@ class Solution:
                     s+=chars[l]
                 else:
                     s+=chars[l]+str(count)
-                count = 1
+                count = 0
                 l = r
-                r += 1
-            else:
-                count+=1
-                r+=1
+            count+=1
+            r+=1
+            
         s = [i for i in s]
 
         for j in range(len(s)):
