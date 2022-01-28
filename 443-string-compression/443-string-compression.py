@@ -18,11 +18,9 @@ class Solution:
             count+=1
             r+=1
             
-        s = [i for i in s]
 
         for j in range(len(s)):
             if j >=len(chars):
-                print(j,chars,s)
                 chars.append(s[j])
             else:
                 chars[j]=s[j]
