@@ -1,10 +1,7 @@
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
-
-        count = 0
-        zeros = 0
-        l,r = 0,0
         
+        l,r,count,zeros = 0,0,0,0
         
         [1,1,1,0,0,0,1,1,1,1,0]
         # |1,1| |1,1,1|  |1,1,1,0|zero |1,1,1,0,0| count |1,1,1,0,0,0| zero exceeds 
