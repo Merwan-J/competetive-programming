@@ -15,7 +15,7 @@ class Solution:
             total += nums[r]
             
             if total>=k:
-                size = min(size,r-l+1)
+                size = min(size,r+1)
             
             while stack and stack[-1][0]>total:
                 stack.pop()
