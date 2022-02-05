@@ -61,15 +61,10 @@ class Solution:
         for i in range(1,len(nums)-k+1):
             getAppended = i if ksum[i] > ksum[leftmax[-1]] else leftmax[-1]
             leftmax.append(getAppended)
-        print(ksum)            
-        print(leftmax)
         
         rightmax = [len(nums)-k]*len(ksum)
         for i in range(len(ksum)-2,-1,-1):
             rightmax[i] = i if ksum[i]>=ksum[rightmax[i+1]] else rightmax[i+1]
-        
-        print(rightmax)
-        print(ksum[rightmax[0]])
         
         ans = [0,0,0]
         maxSum = 0
@@ -78,7 +73,6 @@ class Solution:
             mid = i
             end = rightmax[i+k]
             crntSum = ksum[first]+ksum[mid]+ksum[end]
-            print(first,mid,end,crntSum)
             if crntSum>maxSum:
                 maxSum = crntSum
                 ans = [first,mid,end]
