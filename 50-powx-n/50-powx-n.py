@@ -7,6 +7,7 @@ class Solution:
                 return x
             if n%2==0:
                 return helper(x,n//2)**2
+            
             return x * helper(x,n//2)**2
         
         return helper(1/x,-n) if n<0 else helper(x,n)
