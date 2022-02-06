@@ -1,17 +1,14 @@
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
-        def recur(s,i):
-            crnt = s + '1' 
-            inv_str = ''
-            for l in range(len(s)):
-                if s[l] == '0':
-                    inv_str += "1"
-                else:
-                    inv_str += "0"
-                    
-            s = crnt + "".join(inv_str[::-1])
-            if i == n:
+        def helper(s,count):
+            if count==n:
                 return s
-            return recur(s,i+1)
-        
-        return recur("0",1)[k-1]
+            inverted = ""
+            for i in range(len(s)-1,-1,-1):
+                if s[i]=="0":
+                    inverted+="1"
+                else:
+                    inverted+="0"
+            s = s+"1"+inverted
+            return helper(s,count+1)
+        return helper("0",1)[k-1]
