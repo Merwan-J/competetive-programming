@@ -6,6 +6,8 @@ class Solution:
             if n==1:
                 return x
             res = helper(x*x,n//2)
+#             res = helper(x,n//2)
+            # return x * res*res if n%2 else res*res
             return x * res if n%2 else res
         
         return 1/helper(x,-n) if n<0 else helper(x,n)
