@@ -9,25 +9,28 @@ class Solution:
             ans = list1 if list1!=None else list2
             return ans
         
-        arr = []
+        prev = None
+        headNode = list1 if list2.val>=list1.val else list2
+        p1 = list1
+        p2 = list2
         
-        while list1 or list2:
-            if list1:
-                arr.append(list1)
-                list1 = list1.next
-            if list2:
-                arr.append(list2)
-                list2 = list2.next
+        while p1 or p2:
+            if p1 and p2:
+                if p1.val>p2.val:
+                    if prev:
+                        prev.next = p2
+                    prev = p2
+                    p2 = p2.next
+
+                else:
+                    if prev:
+                        prev.next = p1
+                    prev = p1
+                    p1 = p1.next
+            else:
+                prev.next = p1 if p1 else p2
+                break
+
+        return headNode
         
-        arr = sorted(arr,key=lambda node: node.val)
-        
-        for i in range(len(arr)):
-            if i == len(arr)-1:
-                arr[i].next = None
-                continue
-            
-            node = arr[i]
-            node.next = arr[i+1]
-        # print(arr[0])
-        return arr[0]
             
