@@ -6,7 +6,6 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        count = 0
         def handler(node,count):
             if node is None:
                 return count
@@ -16,5 +15,5 @@ class Solution:
             
             return max(left,right)
         
-        return handler(root,count)
+        return handler(root,0)
         
