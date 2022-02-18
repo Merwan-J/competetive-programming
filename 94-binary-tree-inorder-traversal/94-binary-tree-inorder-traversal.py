@@ -9,6 +9,7 @@ class Solution:
         arr = []
         if root is None:
             return arr
+        
         def helper(node):
             if node.left is None and node.right is None:
                 arr.append(node.val)
