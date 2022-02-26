@@ -9,11 +9,10 @@ class Solution:
         mid = start + (end-start)//2
        
         while start<=end:
-            print(start,mid,end)
             if start==end:
-                if isBadVersion(start) and isBadVersion(end):
-                    return end
-                return end+1
+                if isBadVersion(start):
+                    return start
+                return start+1
             if isBadVersion(mid):
                 end = mid-1
             else:
