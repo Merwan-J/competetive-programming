@@ -20,16 +20,25 @@ class Solution:
 #                 i+=1
             
 #             i+=1
-        count = 0
-        for i in range(len(flowerbed)):
-            if flowerbed[i]==0:
-                empty_left = (i==0) or (flowerbed[i-1]==0)
-                empty_right = (i==len(flowerbed)-1) or (flowerbed[i+1]==0)
-                if empty_left and empty_right:
-                    flowerbed[i] = 1
-                    count+=1
-                    if count>=n:
-                        return True
+        # count = 0
+        # for i in range(len(flowerbed)):
+        #     if flowerbed[i]==0:
+        #         empty_left = (i==0) or (flowerbed[i-1]==0)
+        #         empty_right = (i==len(flowerbed)-1) or (flowerbed[i+1]==0)
+        #         if empty_left and empty_right:
+        #             flowerbed[i] = 1
+        #             count+=1
+        #             if count>=n:
+        #                 return True
+        # return count>=n
+        count = 0 
+        flowerbed = [0] + flowerbed + [0]
+        
+        for i in range(1,len(flowerbed)-1):
+            if flowerbed[i] ==0 and flowerbed[i-1] !=1 and flowerbed[i+1] !=1:
+                count+=1
+                flowerbed[i] =1
+                
         return count>=n
         
                 
