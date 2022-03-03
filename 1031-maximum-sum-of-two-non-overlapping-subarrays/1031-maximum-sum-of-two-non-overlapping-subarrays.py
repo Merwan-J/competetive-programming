@@ -5,30 +5,31 @@ class Solution:
     # 1  2  4 
     # 2  3  5
     # 3  4  6
-        prefix = [nums[0]]
-        for i in range(1,len(nums)):
-            prefix.append(nums[i]+prefix[i-1])
-        maxTotal = -1
-        l,r = 0,firstLen-1
+        l,r = 0,firstLen
         
-        while l<=r and r<len(nums):
-            crntSum = prefix[r]-prefix[l-1] if l!=0 else prefix[r]
+        prefixSum = [0]
+        for i in range(len(nums)):
+            prefixSum.append(nums[i]+prefixSum[-1])
+        # print(prefixSum)
+        # [0, 0, 6, 11, 13, 15, 20, 21, 30, 34]
+
+        MaxSum = 0 
+        while r<=len(nums):
+            crntSum = prefixSum[r]-prefixSum[l]
+            # print(crntSum)
             
             maxRight = 0
-            for i in range(r+1,len(prefix)-secondLen + 1):
-                maxRight = max(maxRight,prefix[i+secondLen-1]-prefix[i-1])
-            
+            for i in range(r,len(nums)-secondLen+1):
+                maxRight = max(maxRight,prefixSum[i+secondLen]-prefixSum[i])
+                
             maxLeft = 0
-            if l-1-(secondLen-1)>=0:
-                for j in range(0,l-secondLen+1):
-                    if j==0:
-                        maxLeft = max(maxLeft,prefix[secondLen-1])
-                        continue
-                    maxLeft = max(maxLeft,prefix[j+secondLen-1]-prefix[j-1])
+            for i in range(0,l-secondLen+1):
+                maxLeft = max(maxLeft,prefixSum[i+secondLen]-prefixSum[i])
+            MaxSum = max(MaxSum,crntSum + max(maxLeft,maxRight))
             
-            maxTotal = max(maxTotal,crntSum+maxLeft,crntSum+maxRight)
-            
-            r+=1
             l+=1
+            r+=1
         
-        return maxTotal
+        return MaxSum
+
+    
