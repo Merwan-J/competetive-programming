@@ -9,14 +9,13 @@ class Solution:
         def fill(r,c,color):
             if not isvalid(r,c) or (r,c) in visited:
                 return 
-            if image[r][c] != color: return 
-            
-            image[r][c]  = newColor
-            visited[(r,c)] = True
-            
-            fill(r,c-1,color)
-            fill(r,c+1,color)
-            fill(r+1,c,color)
-            fill(r-1,c,color)
+            if image[r][c] == color: 
+                image[r][c]  = newColor
+                visited[(r,c)] = True
+
+                fill(r,c-1,color)
+                fill(r,c+1,color)
+                fill(r+1,c,color)
+                fill(r-1,c,color)
         fill(sr,sc,image[sr][sc])
         return image
