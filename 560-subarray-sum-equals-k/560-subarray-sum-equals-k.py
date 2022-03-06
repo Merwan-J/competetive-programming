@@ -1,12 +1,15 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        hash = {0:1}
+#         
+       
+        counter = {0:1}
         count = 0
-        prefixSum = 0
+        prefixsum  = 0
         
-        for i in nums:
-            prefixSum+=i
-            count+= hash.get(prefixSum-k,0)
-            hash[prefixSum] = hash.get(prefixSum,0)+1
+        for num in nums:
+            prefixsum += num
+            if prefixsum-k in counter:
+                count+=counter[prefixsum-k]
+            counter[prefixsum] = counter.get(prefixsum,0) + 1
         
         return count
