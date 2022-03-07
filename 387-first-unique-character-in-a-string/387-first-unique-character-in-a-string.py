@@ -3,16 +3,8 @@ class Solution:
         
                 
             
-        counter = dict()
-        
+        counter = collections.Counter(s)
         for i in range(len(s)):
-            if s[i] in counter:
-                counter[s[i]] = (i,counter[s[i]][1]+1)
-            else:
-                counter[s[i]] = (i,0)
-        
-        for char, tup in counter.items():
-            if tup[1] == 0:
-                return tup[0]
-        
+            if counter[s[i]]==1:
+                return i
         return -1
