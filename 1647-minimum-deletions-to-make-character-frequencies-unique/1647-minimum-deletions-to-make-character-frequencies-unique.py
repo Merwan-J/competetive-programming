@@ -1,5 +1,7 @@
 class Solution:
     def minDeletions(self, s: str) -> int:
+        
+#         This is O(NlogN) solution
 #         counter = collections.Counter(s)
         
 #         counter = list(counter.values())
@@ -14,6 +16,9 @@ class Solution:
         
 #         return count
     
+    
+    
+#         This is O(n)
         counter = collections.Counter(s)
         
         counter = list(counter.values())
