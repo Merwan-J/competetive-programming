@@ -1,25 +1,24 @@
-class Solution:
-    def countNegatives(self, grid: List[List[int]]) -> int:
-        def search(arr,start,end):
-            mid = start + (end-start+1)//2
-            if start>end:
-                return 0
-            
-            if start==end:
-                if arr[start]<0:
-                    return len(arr)-start
-                return 0
-            if arr[mid]>=0:
-                return search(arr,mid+1,end)
-            else:
-                if arr[mid-1]<0:
-                    return search(arr,start,mid-1)
-                return len(arr)-mid
+class Solution(object):
+    def countNegatives(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        total = 0
         
-        count = 0
-        for mat in grid:
-            x = search(mat,0,len(mat)-1)
-            # print(x)
-            count+=x
-        return count
+        for li in grid:
+            l,r = 0,len(li)-1
+            pos = len(li)
             
+            while l<=r:
+                mid = (l+r)//2
+                
+                if li[mid]<0:
+                    pos = mid
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            
+            total += len(li)-pos
+        
+        return total
