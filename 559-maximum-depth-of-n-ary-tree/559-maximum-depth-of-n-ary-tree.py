@@ -8,20 +8,41 @@ class Node:
 
 class Solution:
     def maxDepth(self, root: 'Node') -> int:
-        if not root: return 0
-        
-        visited = dict()
-        
-        def helper(node,count):
-            visited[node] = True
+#       RECUSIVE SOLUTION         
+
+#         visited = []
+#         def dfs(node):
+#             if node not in visited:
+#                 visited.append(node)
+#             depth = 0
+#             for child in node.children:
+#                 if child not in visited:
+#                     depth = max(dfs(child),depth)
             
-            if not node.children:
-                return count
-            depth = 0
-            for vertex in node.children:
-                if vertex not in visited:
-                    depth = max(depth,helper(vertex,count+1))
-            return depth
-        return helper(root,1)
+#             return depth + 1
         
+#         return dfs(root) if root is not None else 0
+
+#       ITERATIVE SOLUTION
+
+        if root is None:
+            return 0
         
+        visited = []
+        stack = [(root,1)]
+        depth = 0
+        
+        while stack:
+            node,val = stack.pop()
+            if node not in visited:
+                visited.append(node)
+            
+            depth = max(depth,val)
+            
+            for child in node.children:
+                if child not in visited:
+                    stack.append((child,val+1))
+                
+        return depth         
+        
+                    
