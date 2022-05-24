@@ -22,17 +22,18 @@ class Solution:
         dq = collections.deque([root])
         ans = [[root.val]]
         temp = []
-        
+        tempval = []
         while dq:
             v = dq.popleft()
             
             for node in friends(v):
                 temp.append(node)
+                tempval.append(node.val)
             
             if not dq and temp:
-                ans.append([node.val for node in temp])
+                ans.append(tempval)
                 dq = collections.deque(temp)
-                temp = []
+                temp,tempval = [],[]
         return ans
             
             
