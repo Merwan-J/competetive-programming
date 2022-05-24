@@ -10,36 +10,49 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[float]
         """
-#         stack = collections.deque([root])
-#         visited = []
-#         def friends(node):
-#             if node is None:
-#                 return []
-#             ans = []
-#             if node.right: ans.append(node.right)
-#             if node.left: ans.append(node.left)
-            
-#             return ans
+        stack = collections.deque([root])
+        temp = []
+        count,total = 0,0
+        res = [root.val/1]
         
-#         while stack:
-#             v = stack.popleft()
-#             # visit(v)
-#             visited.append(v.val)
-            
-#             for node in friends(v):
-#                 if node.val not in visited:
-#                     stack.append(node)
-#         print(visited)
-        nodes = dict()
-        def dfs(node,depth):
+        
+        def friends(node):
             if node is None:
-                return 
-            depth += 1
-            nodes[depth] = nodes.get(depth,[])+[node.val]
-            dfs(node.right,depth)
-            dfs(node.left,depth)
-        dfs(root,0)
-        nodes = sorted(nodes.items())
-        nodes = [sum(item[1])/len(item[1]) for item in nodes]
+                return []
+            ans = []
+            if node.right: ans.append(node.right)
+            if node.left: ans.append(node.left)
+            
+            return ans
         
-        return nodes
+        while stack:
+            v = stack.popleft()
+            
+            for node in friends(v):
+                temp.append(node)
+                count += 1
+                total += node.val
+                
+            if not stack:
+                stack = collections.deque(temp)
+                temp = []
+                if count!=0: res.append(total/count)
+                count,total = 0,0
+        return res
+        print(visited)
+
+
+
+#         nodes = dict()
+#         def dfs(node,depth):
+#             if node is None:
+#                 return 
+#             depth += 1
+#             nodes[depth] = nodes.get(depth,[])+[node.val]
+#             dfs(node.right,depth)
+#             dfs(node.left,depth)
+#         dfs(root,0)
+#         nodes = sorted(nodes.items())
+#         nodes = [sum(item[1])/len(item[1]) for item in nodes]
+        
+#         return nodes
