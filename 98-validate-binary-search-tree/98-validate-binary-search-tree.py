@@ -9,6 +9,9 @@ class Solution:
         def helper(node,lower,upper):
             if node is None:
                 return True
+            if not (node.val>lower and node.val < upper ):
+                return False
             
-            return node.val>lower and node.val < upper and helper(node.right,node.val,upper) and helper(node.left,lower,node.val)
+            return helper(node.right,node.val,upper) and helper(node.left,lower,node.val)
+        
         return helper(root,float('-inf'),float('inf'))
