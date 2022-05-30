@@ -1,11 +1,10 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> List[int]:
-        ans = []
+        counter = collections.Counter(nums)
         
-        for num in nums:
-            if num in ans: 
-                ans.remove(num)
-            else:
+        ans = []
+        for num,count in counter.items():
+            if count == 1:
                 ans.append(num)
         
         return ans
