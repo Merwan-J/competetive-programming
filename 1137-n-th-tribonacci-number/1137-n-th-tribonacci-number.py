@@ -3,18 +3,18 @@ class Solution:
 #         top down
         memo = {0:0,1:1,2:1}
         
-        def helper(i):
-            if i in memo:
-                return memo[i]
+#         def helper(i):
+#             if i in memo:
+#                 return memo[i]
             
-            if i<0:
-                return 0
+#             if i<0:
+#                 return 0
             
-            memo[i] = helper(i-1) + helper(i-2) + helper(i-3)
+#             memo[i] = helper(i-1) + helper(i-2) + helper(i-3)
             
-            return memo[i]
+#             return memo[i]
             
-        return helper(n)
+#         return helper(n)
     
     
 #     bottom up
