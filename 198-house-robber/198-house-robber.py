@@ -1,5 +1,6 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
+#         bottom up
         n = len(nums)
         dp = [0]*(n+2)
         
@@ -8,3 +9,17 @@ class Solution:
         
         return dp[-1]
         
+#         top down
+    
+        n = len(nums)
+        memo = [0]*(n)
+        
+        def helper(n):
+            if memo[n] is not None:
+                return memo[n]
+            if n<0:
+                return 0
+            memo[n] = max(helper(n-1),helper(n-2)+nums[n-1])
+            
+            return memo[n]
+        return helper(n)
