@@ -1,32 +1,45 @@
 class Solution:
-    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
-        neighbors = {node: set() for node in range(numCourses)}    # store the graph
-        indegree = defaultdict(int)     # store indegree info for each node
-        pre_lookup = defaultdict(set)   # store the prerequisites info for each node
+    def checkIfPrerequisite(self, numCourses: int, prereq: List[List[int]], queries: List[List[int]]) -> List[bool]:
         
-        # create the graph
-        for pre, post in prerequisites:
-            neighbors[pre].add(post)
-            indegree[post] += 1
+        outdegree = collections.defaultdict(set)
+        for i in range(len(prereq)):
+            req = prereq[i][0]
+            course = prereq[i][1]
+            
+            outdegree[req].add(course)
         
-        # add 0 degree nodes into queue for topological sort
-        queue = deque([])
-        for n in neighbors:
-            if indegree[n] == 0:
-                queue.append(n)
+        # print(outdegree)
         
-        # use BFS to do topological sort to create a prerequisite lookup dictionary
-        while queue:
-            cur = queue.popleft()
-            for neighbor in neighbors[cur]:
-                pre_lookup[neighbor].add(cur)                   # add current node as the prerequisite of this neighbor node
-                pre_lookup[neighbor].update(pre_lookup[cur])    # add all the preqs for current node to the neighbor node's preqs
+        indirect = {}
+        
+        def dfs(node):
+            if not outdegree[node]:
+                indirect[node] = set()
+                return indirect[node]
+            
+            if node in indirect:
+                return indirect[node]
+            
+            ans = outdegree[node].copy()
+            
+            for course in outdegree[node]:
+                ans.update(dfs(course))
+            
+            indirect[node] = ans
+            
+            return indirect[node]
+        
+        for course in range(numCourses):
+            dfs(course)
+        
+        ans = []
+        for req,course in queries:
+            if course in indirect[req]:
+                ans.append(True)
+            else:
+                ans.append(False)
+        
+        return ans
+            
                 
-                indegree[neighbor] -= 1         # regular topological search operations
-                if indegree[neighbor] == 0:
-                    queue.append(neighbor)
-        
-        # traverse the queries and return the results
-        result = [True if q[0] in pre_lookup[q[1]] else False for q in queries]
-        
-        return result
+            
