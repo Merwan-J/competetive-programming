@@ -1,43 +1,28 @@
 class Solution:
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
-        
-        
-        total_node_count = n
-        
-        if total_node_count == 1:
-            # Quick response for one node tree
+        if n==1:
             return [0]
+        graph = collections.defaultdict(set)
         
+        for u,v in edges:
+            graph[u].add(v)
+            graph[v].add(u)
+            
+        leaves = [node for node,val in graph.items() if len(val)==1]
         
-        # build adjacency matrix
-        adj_matrix = defaultdict( set )
-        
-        for src_node, dst_node in edges:
-            adj_matrix[src_node].add( dst_node )
-            adj_matrix[dst_node].add( src_node )
+        while n>2:
+            n-=len(leaves)
             
+            newleaves = []
             
-        # get leaves node whose degree is 1
-        leave_nodes = [ node for node in adj_matrix if len(adj_matrix[node]) == 1 ]
-        
-        
-        # keep doing leave nodes removal until total node count is smaller or equal to 2
-        while total_node_count > 2:
-            
-            total_node_count -= len(leave_nodes)
-            
-            leave_nodes_next_round = []
-            
-            # leave nodes removal
-            for leaf in leave_nodes:
+            while leaves:
+                node = leaves.pop()
+                adj = graph[node].pop()
+                graph[adj].remove(node)
                 
-                neighbor = adj_matrix[leaf].pop()
-                adj_matrix[neighbor].remove( leaf )
-                
-                if len(adj_matrix[neighbor]) == 1:
-                    leave_nodes_next_round.append( neighbor )
-                    
-            leave_nodes = leave_nodes_next_round
+                if len(graph[adj])==1:
+                    newleaves.append(adj)
+            leaves = newleaves
         
-        # final leave nodes are root node of minimum height trees
-        return leave_nodes
+        return leaves
+            
