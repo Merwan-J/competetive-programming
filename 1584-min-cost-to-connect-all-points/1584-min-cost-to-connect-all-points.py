@@ -17,7 +17,6 @@ class Solution:
         heapq.heapify(graph[0])
         visited[0]  = True
         
-        print(heap)
         
         while heap and n:
             cost,node = heapq.heappop(heap)
