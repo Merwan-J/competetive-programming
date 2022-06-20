@@ -53,7 +53,7 @@ class WordFilter:
         presult = pcur.indices
         sresult = scur.indices
         
-        
+#         here is the trick, without it it would go TLE
         for i in range(len(presult)-1,-1,-1):
             if presult[i] in sresult:
                 return presult[i]
