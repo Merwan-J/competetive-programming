@@ -6,6 +6,7 @@ class Solution:
             timePoints[i] = toMin(timePoints[i].split(":"))
         
         timePoints.sort()
+        timePoints.append(24*60 + timePoints[0])
         
         ans = float('inf')
         for i in range(len(timePoints)-1):
@@ -15,4 +16,4 @@ class Solution:
             ans = min(ans,next-cur)
             
         
-        return min(ans,24*60-timePoints[-1] + timePoints[0])
+        return ans
