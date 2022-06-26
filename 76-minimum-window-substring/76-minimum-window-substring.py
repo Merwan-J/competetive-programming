@@ -1,26 +1,37 @@
 class Solution:
-    # @return a string
-    def minWindow(self, S, T):
-        indices = {}
-        for char in T:
-            indices[char] = []
-        miss = list(T)
-        start = 0
-        end = len(S)
-        for i in range(len(S)):
-            if S[i] in T:
-                if S[i] not in miss and indices[S[i]] != []:
-                    indices[S[i]].pop(0)
-                elif S[i] in miss:
-                    miss.remove(S[i])
-                indices[S[i]].append(i)
-            if miss == []:
-                maximum = max([x[-1] for x in indices.values()])
-                minimum = min([x[0] for x in indices.values()])
-                if maximum-minimum+1 < end-start+1:
-                    start = minimum
-                    end = maximum
-        if miss != []:
-            return ""
-        else:
-            return S[start:end+1]
+    def minWindow(self, s: str, t: str) -> str:
+        counter = collections.Counter(t)
+        run = {}
+        need,have = len(counter),len(run)
+        
+        start,end = 0,0
+        minLen = float('inf')
+        
+        l = 0
+        for i in range(len(s)):
+            run[s[i]] = run.get(s[i],0) + 1
+            
+            if s[i] in counter and run[s[i]] == counter[s[i]]:
+                have += 1
+            
+            while have == need:
+                if i-l+1 < minLen:
+                    minLen = i-l+1
+                    start,end = l,i
+                
+                run[s[l]] -= 1
+                if s[l] in counter and run[s[l]]<counter[s[l]]:
+                    have -= 1
+            
+                l += 1
+        
+        return "" if minLen == float('inf') else s[start:end+1]
+                
+                
+        
+        
+        
+        
+        
+                
+        
