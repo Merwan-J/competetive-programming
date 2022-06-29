@@ -1,20 +1,18 @@
 class Solution:
     def gcdOfStrings(self, str1: str, str2: str) -> str:
-        t = ""
+#         using Euclidean algorithm for gcd of numbers to Strings
         
-        n = min(len(str1),len(str2))
-        l1,l2 = len(str1),len(str2)
-        i = 0
+        def gcd(s1,s2):
+            if len(s1)<len(s2):
+                return gcd(s2,s1)
+            
+            if s2=="":
+                return s1
+            
+            if s1[:len(s2)] == s2:
+                return gcd(s1[len(s2):],s2)
+            return ""
         
-        ans = ""
-        while i<n:
-            if str1[i] == str2[i]:
-                t+=str1[i]
-                i+=1
-                a = len(t)
-                if t*(l1//a) == str1 and t*(l2//a) == str2:
-                    ans = t
-            else: break
-        
-        return ans
+        return gcd(str1,str2)
+
        
