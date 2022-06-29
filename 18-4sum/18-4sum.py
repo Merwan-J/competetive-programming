@@ -24,4 +24,4 @@ class Solution:
                         r-=1
                     elif total<target:
                         l+=1
-        return list(ans)                
+        return ans                
