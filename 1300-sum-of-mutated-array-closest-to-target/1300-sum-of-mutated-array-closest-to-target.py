@@ -11,7 +11,8 @@ class Solution:
         remaining = len(nums)
         for num in nums:
             if running_sum + remaining * num > target:
-                return ceil((target - running_sum) / remaining - 0.5)
+                 # (target - 0.0001) is done to consider the case where both lower ceiling and higher ceiling int is equally away from the target.
+                return int(round((target - running_sum-0.0001) / remaining))
             running_sum += num
             remaining -= 1
             
