@@ -1,20 +1,51 @@
 class Solution:
     def findBestValue(self, nums: List[int], target: int) -> int:
-#         https://leetcode.com/problems/sum-of-mutated-array-closest-to-target/discuss/463306/JavaC%2B%2BPython-Just-Sort-O(nlogn)
-
-# this is the best solution so far... 
-
-
-
         nums.sort()
-        running_sum = 0
-        remaining = len(nums)
+        p_sum = [0]
+        # print(nums)
         for num in nums:
-            if running_sum + remaining * num > target:
-                 # (target - 0.0001) is done to consider the case where both lower ceiling and higher ceiling int is equally away from the target.
-                return int(round((target - running_sum-0.0001) / remaining))
-            running_sum += num
-            remaining -= 1
-            
-        return nums[-1]
+            p_sum.append(num + p_sum[-1])
+        # print(p_sum)
+        def check(num):
+            l = 0
+            r = len(nums) -1
+
+            ans = r+1
+            while l<=r:
+                mid = l + (r-l)//2
+                if nums[mid] >= num:
+                    ans = mid
+                    r= mid-1
+                else:
+                    l = mid+1
+
+            # print(num*(len(nums)-ans) + p_sum[ans], num)
+            return num*(len(nums)-ans) + p_sum[ans]
+
         
+
+        ans = float('inf')
+        ans_num = 0
+
+        l = 0
+        r = max(nums)
+
+        while l<=r:
+            mid = l + (r-l)//2
+
+            found = check(mid)
+            cur = abs(target - found)
+
+            if cur < ans:
+                ans = cur
+                ans_num = mid
+            if cur == ans:
+                ans_num = min(ans_num, mid)
+            if found >= target:
+                r = mid-1
+            elif found < target:
+                l = mid + 1
+
+        return (ans_num)
+
+
