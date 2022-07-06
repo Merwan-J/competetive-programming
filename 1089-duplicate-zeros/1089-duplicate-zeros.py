@@ -1,17 +1,20 @@
 class Solution:
     def duplicateZeros(self, arr: List[int]) -> None:
-        pos = {index:val for index,val in enumerate(arr)}
-        i = 0
-        shift = 0
+        zeros = arr.count(0)
+        n = len(arr)
+        longer = n + zeros
         
-        while i<len(arr):
-            arr[i] = pos[i-shift]
-            if arr[i] == 0 and i+1<len(arr):
-                shift+=1
-                arr[i+1] = 0
-                i+=1
-            i+=1
+        l,r = n-1,longer-1
         
-        
+        while l>=0:
+            if r<n:
+                arr[r] = arr[l]
+            if arr[l] == 0:
+                r-=1
+                if r<n:
+                    arr[r] = arr[l]
+            r-=1
+            l-=1
+            
         
         
