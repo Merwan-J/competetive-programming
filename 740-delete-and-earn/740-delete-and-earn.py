@@ -6,8 +6,6 @@ class Solution:
         # nums = [i+1 for i in range(1000)]
         # print(nums)
         count = collections.Counter(nums)
-        
-        nums = list(set(nums))
         nums.sort()
         
         @cache
@@ -15,6 +13,8 @@ class Solution:
             if i==len(nums):
                 # print(p)
                 return 0
+            if i!=0 and nums[i-1] == nums[i]:
+                return dfs(i+1, picked)
             
             num = nums[i]
             t = num*count[num] 
