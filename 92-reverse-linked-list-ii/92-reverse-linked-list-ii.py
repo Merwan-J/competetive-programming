@@ -15,7 +15,7 @@ class Solution:
         """
         
         prev = None
-        headNode = head
+        returnNode = head
         
         while head:
             if l == 1:
@@ -28,8 +28,9 @@ class Solution:
                     p = cur
                     r-=1
                 leftNode.next = head
-                if prev: prev.next = p
-                return headNode if leftNode!=headNode else p
+                if prev: 
+                    prev.next = p
+                return returnNode if leftNode!=returnNode else p
             prev = head
             head = head.next
             l-=1
