@@ -8,7 +8,7 @@ class Solution:
     def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
         to_delete = set(to_delete)
         order = []
-        def dfs(node,parent):
+        def removeEdge(node,parent):
             if node is None:
                 return 
             if node.val in to_delete:
@@ -19,25 +19,25 @@ class Solution:
             else:
                 order.append(node)
                 
-            dfs(node.right,node)
-            dfs(node.left,node)
+            removeEdge(node.right,node)
+            removeEdge(node.left,node)
             
         def visit(node,visited):
             if node is None:
                 return 
             visited.add(node)
+            
             visit(node.right,visited)
             visit(node.left,visited)
             
-        dfs(root,TreeNode())
+        removeEdge(root,TreeNode())
+        
         visited = set()
         ans = []
-        
         for node in order:
             if node not in visited:
                 ans.append(node)
                 visit(node,visited)
-        
         return ans
                 
             
