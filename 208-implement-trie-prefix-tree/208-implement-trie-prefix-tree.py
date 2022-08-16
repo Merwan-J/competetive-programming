@@ -1,34 +1,31 @@
 class Trie:
 
     def __init__(self):
-        self.links = dict()
-        self.flag = False
-    
+        self.children = {}
+        self.end = False
 
     def insert(self, word: str) -> None:
         cur = self
         for char in word:
-            if char not in cur.links:
-                cur.links[char] = Trie()
-            cur = cur.links[char]
-        
-        cur.flag = True
+            if char not in cur.children:
+                cur.children[char] = Trie()
+            cur = cur.children[char]
+        cur.end = True
 
     def search(self, word: str) -> bool:
         cur = self
         for char in word:
-            if char not in cur.links:
+            if char not in cur.children:
                 return False
-            cur = cur.links[char]
-            
-        return cur.flag == True
+            cur = cur.children[char]
+        return cur.end == True
 
     def startsWith(self, prefix: str) -> bool:
         cur = self
         for char in prefix:
-            if char not in cur.links:
+            if char not in cur.children:
                 return False
-            cur = cur.links[char]
+            cur = cur.children[char]
         return True
 
 
