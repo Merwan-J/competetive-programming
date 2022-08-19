@@ -1,22 +1,32 @@
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
 
+        def isPossible(limit):
+            i = 0
+            count = 0
+            while i<len(weights):
+                total = 0
+                while i<len(weights):
+                    if total + weights[i]<=limit:
+                        total += weights[i]
+                        i+=1
+                    else:
+                        break
+                count += 1
+            
+            return count
+        
+        
+        
         l,r = max(weights), sum(weights)
         
         while l<=r:
             mid = (l+r)//2
-            total = 0
-            count = 1
-            for w in weights:
-                if total + w > mid:
-                    count += 1
-                    total = 0
-                total += w
-                
-            if count>days:
+            day = isPossible(mid)
+        
+            if day>days:
                 l = mid + 1
             else:
                 r = mid - 1
-                
         return l            
             
