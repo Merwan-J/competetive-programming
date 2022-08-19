@@ -3,20 +3,18 @@ class Solution:
 
         def isPossible(limit):
             i = 0
-            count = 0
+            day = 0
+            
             while i<len(weights):
                 total = 0
-                while i<len(weights):
-                    if total + weights[i]<=limit:
-                        total += weights[i]
-                        i+=1
-                    else:
-                        break
-                count += 1
+                while i<len(weights) and total + weights[i]<=limit:
+                    total+=weights[i]
+                    i+=1
+                day+=1
             
-            return count
-        
-        
+            return day
+            
+                    
         
         l,r = max(weights), sum(weights)
         
