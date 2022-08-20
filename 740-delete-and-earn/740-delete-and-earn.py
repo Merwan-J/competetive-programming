@@ -1,36 +1,17 @@
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        # 1 2 3 4 5
-        
-        
-        # nums = [i+1 for i in range(1000)]
-        # print(nums)
-        count = collections.Counter(nums)
-        nums.sort()
-        
-        @cache
-        def dfs(i, picked):
-            if i==len(nums):
-                # print(p)
-                return 0
-            if i!=0 and nums[i-1] == nums[i]:
-                return dfs(i+1, picked)
-            
-            num = nums[i]
-            t = num*count[num] 
+        counter = collections.Counter(nums)
+        nums = sorted(list(set(nums)))
+        memo = {}
 
-            yes = 0 if picked and (nums[i-1]+1==num) else t+ dfs(i+1, True)
-            no = dfs(i+1, False)
-            
-            return max(yes, no)
-        
-        return dfs(0, False)
-    
-#         ans = -1
-        
-#         for num in nums:
-#             ans = max(ans,t)
-        
-#         return ans
-    
+        @cache
+        def helper(i,deleted,):
+            if i >= len(nums):
+                return 0
          
+            dontPick = helper(i+1,False)
+            pick = counter[nums[i]]*nums[i] + helper(i+1,True) if not(deleted and nums[i-1]+1==nums[i]) else 0
+            
+            return max(dontPick,pick)
+        
+        return helper(0,False)
