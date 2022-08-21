@@ -4,13 +4,14 @@ class Solution:
         
         def permute(s):
             if len(s) == len(nums):
-                self.ans.append(s)
+                self.ans.append(s.copy())
                 return
             
             for num in nums:
                 if num not in s:
-                    new = s + [num]
-                    permute(new)
+                    s.append(num)
+                    permute(s)
+                    s.pop()
         
         permute([])
         
