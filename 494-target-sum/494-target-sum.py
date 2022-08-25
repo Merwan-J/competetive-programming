@@ -24,9 +24,6 @@ class Solution:
             for amount in range(-1000,1001):
                 dp[i][amount+num] += dp[i-1][amount]
                 dp[i][amount-num] += dp[i-1][amount] 
-        
-        for i in range(len(dp[-1])):
-            if dp[-1][i]!=0:
-                print(i,dp[-1][i])
+    
         return dp[-1][target]
             
