@@ -19,17 +19,16 @@ class Solution:
         def dp(row,col):
             if row>=len(matrix) or col>=len(matrix[0]):
                 return 0
+            ans = 1 + min(dp(row+1,col),dp(row,col+1),dp(row+1,col+1))
             if matrix[row][col] == "0":
                 return 0
-            ans = 1 + min(dp(row+1,col),dp(row,col+1),dp(row+1,col+1))
+            
             self.ans = max(self.ans,ans)
 
             
             return ans
         
-        for row in range(h):
-            for col in range(w):
-                dp(row,col)
+        dp(0,0)
         return self.ans**2
             
             
