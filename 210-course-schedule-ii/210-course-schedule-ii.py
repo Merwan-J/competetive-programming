@@ -1,32 +1,30 @@
 class Solution:
     def findOrder(self, numCourses: int, prereq: List[List[int]]) -> List[int]:
-        adjList = [[]]*numCourses
-        zeroInDegree = []
-        inDegree = [0]*numCourses
-        topoSort = []
+        graph = defaultdict(list)
+        indegree = [0]*numCourses
         
-        for pair in prereq:
-            a = pair[0]
-            b = pair[1]
+        for end,start in prereq:
+            graph[start] += [end]
+            indegree[end]+=1
             
-            adjList[b] = adjList[b] + [a]
-            inDegree[a]+=1
+        q = deque([])
+        for node in range(numCourses):
+            if indegree[node] == 0:
+                q.append(node)
         
-        for i in range(numCourses):
-            if inDegree[i] == 0:
-                zeroInDegree.append(i)
+        if len(q)==0:
+            return []
         
-
-        print(adjList,inDegree,zeroInDegree)
-
-        while zeroInDegree:
-            cur = zeroInDegree.pop()
-            topoSort.append(cur)
-            
-            for i in adjList[cur]:
-                inDegree[i]-=1
-                
-                if inDegree[i] == 0:
-                    zeroInDegree.append(i)
+        ans = []
+        while q:
+            node = q.popleft()
+            ans.append(node)
+            children = graph[node]
+            for child in children:
+                indegree[child]-=1
+                if indegree[child] == 0:
+                    q.append(child)
         
-        return topoSort if sum(inDegree)==0 else []
+        return ans if len(ans)==numCourses else []
+        
+        
