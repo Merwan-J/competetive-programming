@@ -1,35 +1,26 @@
 class Solution:
     def canFinish(self, numCourses: int, prereq: List[List[int]]) -> bool:
-#         Topological sort
-        adjList = [[]]*numCourses
-        zeroInDegree = []
-        inDegree = [0]*numCourses
-#     make adj list for each course
-        for pair in prereq:
-            a = pair[0]
-            b = pair[1]
-            
-            adjList[b] = adjList[b] + [a]
-            inDegree[a]+=1
+        indegree = [0]*numCourses
+        graph = defaultdict(list)
         
-#   populate the zeroInDegree llist
-        for i in range(numCourses):
-            if inDegree[i] == 0:
-                zeroInDegree.append(i)
+        for end,start in prereq:
+            graph[start]+=[end]
+            indegree[end]+=1
         
-
-        print(adjList,inDegree,zeroInDegree)
-#   loop over the zeroindegree decrementing the total egdes and appending zeroindegrees along the way
-        while zeroInDegree:
-            cur = zeroInDegree.pop()
-            for i in adjList[cur]:
-                inDegree[i]-=1
+        q = deque([])
+        for node in range(numCourses):
+            if indegree[node] == 0:
+                q.append(node)
+        
+        while q:
+            node = q.popleft()
+            children = graph[node]
+            for child in children:
+                indegree[child]-=1
+                if indegree[child]==0:
+                    q.append(child)
+        
+        return sum(indegree) == 0
+        
+        
                 
-                if inDegree[i] == 0:
-                    zeroInDegree.append(i)
-        
-# check if we have traversed all the nodes in topological manner
-        return sum(inDegree)==0
-
-
-        
