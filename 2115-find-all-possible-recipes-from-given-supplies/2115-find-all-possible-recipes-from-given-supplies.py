@@ -1,34 +1,23 @@
 class Solution:
     def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
-
-        whole = set(supplies + recipes + [i for ing in ingredients for i in ing ])
-        indegree = {i:set() for i in whole}
-        outdegree = {i:set() for i in whole}
-        zero = []
-        
-        for i in range(len(recipes)):
-            rec = recipes[i]
-            for ing in ingredients[i]:
-                indegree[rec].add(ing)
-                outdegree[ing].add(rec)
-        
-        for rec in supplies:
-            if len(indegree[rec])==0:
-                zero.append(rec)
-
-        while zero:
-            node = zero.pop()
-            for adj in outdegree[node]:
-                indegree[adj].remove(node)
-                if len(indegree[adj])==0:
-                    zero.append(adj)
-        
-        ans = []
-        
-        for rec,ing in indegree.items():
-            if len(ing)==0 and rec in recipes:
-                ans.append(rec)
-        
-        return ans
+        indegree = defaultdict(int)
+        outdegree = defaultdict(list)
         
         
+        for i,ingredients in enumerate(ingredients):
+            indegree[recipes[i]]=len(ingredients)
+            for ing in ingredients:
+                outdegree[ing]+=[recipes[i]]
+        
+        q = deque(supplies)
+        
+        while q:
+            ing = q.popleft()
+            for recipe in outdegree[ing]:
+                indegree[recipe]-=1
+                if indegree[recipe]==0:
+                    q.append(recipe)
+        
+        recipes = set(recipes)
+        
+        return [recipe for recipe in recipes if indegree[recipe]==0]
