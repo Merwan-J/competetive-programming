@@ -26,4 +26,4 @@ class Solution:
                 t.append(item[1])
             ans.append(t)
         
-        return [vals for vals in ans] 
+        return ans
