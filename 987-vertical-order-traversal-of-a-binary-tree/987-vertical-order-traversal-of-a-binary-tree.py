@@ -25,6 +25,5 @@ class Solution:
             for item in items:
                 t.append(item[1])
             ans.append(t)
-        print(ans)
         
         return [vals for vals in ans] 
