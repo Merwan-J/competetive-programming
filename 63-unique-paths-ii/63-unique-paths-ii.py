@@ -1,35 +1,32 @@
 class Solution:
     def uniquePathsWithObstacles(self, grid: List[List[int]]) -> int:
-#         Top down approach
-
-#         dp = {}
+        m = len(grid)
+        n = len(grid[0])
         
-#         def dfs(row,col):
-#             if row>=len(grid) or col>=len(grid[0]) or grid[row][col]==1:
-#                 return 0
-            
-#             if row==len(grid)-1 and col == len(grid[0])-1:
-#                 return 1
-#             if (row,col) in dp:
-#                 return dp[(row,col)]
-            
-#             dp[(row,col)] = dfs(row+1,col) + dfs(row,col+1)
-            
-#             return dp[(row,col)]
         
-#         return dfs(0,0)
-
-
-#  Bottom up approach
-        row = len(grid)
-        col = len(grid[0])
-        result = [[0]*(col+1) for i in range(row+1)]
-        result[row][col-1] = 1
+        @cache
+        def dp(r,c):
+            if r == m or c == n or grid[r][c] == 1:
+                return 0
+            
+            if r == m-1 and c == n-1:
+                return 1
+           
+            return dp(r+1,c) + dp(r,c+1)
         
-        for r in range(row-1,-1,-1):
-            for c in range(col-1,-1,-1):
-                if grid[r][c] == 0:
-                    result[r][c] = result[r+1][c] + result[r][c+1]
+        return dp(0,0)
+    
+        
+#         dp = [[0]*n for _ in range(m)]
+#         dp[m-1][n-1] = 1 if grid[m-1][n-1]!=1 else 0
+        
+#         for r in range(m-1,-1,-1):
+#             for c in range(n-1,-1,-1):
+#                 if grid[r][c] == 1:
+#                     continue
+#                 if r+1<m:
+#                     dp[r][c] += dp[r+1][c]
+#                 if c+1<n:
+#                     dp[r][c]+=dp[r][c+1]
+#         return dp[0][0]
                 
-        return result[0][0]
-        
