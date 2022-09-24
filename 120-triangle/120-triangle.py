@@ -10,11 +10,9 @@ class Solution:
         
 #         return dfs(0,0)
             
-        cur = [0]*(len(triangle)+1)
-        prev = cur.copy()
+        dp = triangle[-1][:]
         
-        for row in range(len(cur)-2,-1,-1):
-            for col in range(row,-1,-1):
-                cur[col] = triangle[row][col] + min(prev[col],prev[col+1])
-            prev = cur.copy()
-        return cur[0]
+        for row in range(len(dp)-2,-1,-1):
+            for col in range(row+1):
+                dp[col] = triangle[row][col] + min(dp[col],dp[col+1])
+        return dp[0]
