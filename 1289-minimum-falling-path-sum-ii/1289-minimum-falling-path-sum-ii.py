@@ -21,28 +21,26 @@ class Solution:
 #             ans = min(ans,dfs(0,col))
         
 #         return ans
-
+        def find_two_smallest(a):
+            m1, m2 = float('inf'), float('inf')
+            for i, x in enumerate(a):
+                if x <= m1:
+                    m1, m2, i1 = x, m1, i
+                elif x < m2:
+                    m2 = x
+            return [m1, m2, i1]
+        
         row = len(grid)
         col = len(grid[0])
         
-        dp = [0]*col
+        dp = [0]*col 
+        small = [0,0,0]
         
         for r in range(row-1,-1,-1):
-            cur = []
             for c in range(col):
-                cur.append(grid[r][c] + dp[c])
+                shift = small[0] if small[2]!=c else small[1]
+                dp[c] = grid[r][c] + shift
+            small = find_two_smallest(dp)
             
-            lmin = [inf]*col
-            rmin = [inf]*col
-            
-            for i in range(1,col):
-                lmin[i] = min(cur[i-1],lmin[i-1])
-            
-            for i in range(col-2,-1,-1):
-                rmin[i] = min(cur[i+1],rmin[i+1])
-            
-            for i in range(col):
-                dp[i] = min(rmin[i],lmin[i])
-                
-        return min(dp)
+        return small[0] 
         
