@@ -1,14 +1,12 @@
 class Solution:
-    def minimumCardPickup(self, cards: List[int]) -> int:
-        values = dict()
-        ans = len(cards)+1
+    def minimumCardPickup(self, nums: List[int]) -> int:
         
-        for i in range(len(cards)):
-            val = cards[i]
-            if val in values:
-                ans = min(ans,i-values[val]+1)
-            values[val] = i
-        
-        return ans if ans<len(cards)+1 else -1
+        freq = {}
+        minimum_elts_to_remove = float("inf")
 
-            
+        for i, num in enumerate(nums):
+            if num in freq:
+                minimum_elts_to_remove = min(minimum_elts_to_remove, (i - freq[num]) + 1)
+            freq[num] = i
+
+        return minimum_elts_to_remove if minimum_elts_to_remove != float("inf") else -1
