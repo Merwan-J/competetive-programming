@@ -1,22 +1,18 @@
 class Solution:
-    def isInterleave(self, s: str, t: str, p: str) -> bool:
-        if len(s)+len(t) != len(p):
-            return False 
-        
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        if len(s3) != len(s1) + len(s2):
+            return False
         @cache
-        def dp(m,n):
-            if m+n>=len(p):
-                return True
-            
-            if m>=len(s) and n>=len(t):
+        def dp(l,r):
+            if l+r ==len(s3):
                 return True
             
             ans = False
-            if m<len(s) and p[m+n] == s[m]:
-                ans = dp(m+1,n)
-            if n<len(t) and p[m+n] == t[n]:
-                ans = ans or dp(m,n+1)
-            
+            if l<len(s1) and s1[l] == s3[l+r]:
+                ans = ans or dp(l+1,r)
+            if r<len(s2) and s2[r]==s3[l+r]:
+                ans = ans or dp(l,r+1)
+
             return ans
-        
+
         return dp(0,0)
