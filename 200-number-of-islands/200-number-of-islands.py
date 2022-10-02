@@ -1,20 +1,17 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        def explore(row,col):
-            if row>=0 and col>=0 and row<len(grid) and col<len(grid[0]) and grid[row][col] == '1':
-                grid[row][col] = '0'
-                
-                explore(row+1,col)
-                explore(row-1,col)                
-                explore(row,col+1)                
-                explore(row,col-1)
+        def dfs(r,c):
+            if r<0 or r==len(grid) or c<0 or c==len(grid[0]) or grid[r][c]=="0":
+                return
+            grid[r][c] = "0"
+            for d1,d2 in [(-1,0),(1,0),(0,-1),(0,1)]:
+                dfs(r+d1,c+d2)
+            
+        count = 0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == "1":
+                    dfs(r,c)
+                    count+=1
         
-        islands = 0
-        
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                if grid[row][col] == '1':
-                    explore(row,col)
-                    islands += 1
-        
-        return islands
+        return count
