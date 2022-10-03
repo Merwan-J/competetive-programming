@@ -1,25 +1,21 @@
 class Solution:
     def maxSatisfied(self, customers: List[int], grumpy: List[int], minutes: int) -> int:
-        already_satisfied = 0
-        prefix = [0]*len(customers)
-        prefix[0] = 0 if grumpy[0] == 0 else customers[0]
+        p1, p2 = 0, 0               
+        totalCus = 0                 
+        for i in range(len(customers)):
+            if grumpy[i] == 0:
+                totalCus += customers[i]
 
-        for idx, customer in enumerate(customers):
-            if grumpy[idx] == 0:
-                already_satisfied += customer
+        cusNum = 0
+        maxx = 0
+        l = 0
+        
+        for r in range(len(customers)):
+            cusNum = cusNum+customers[r] if grumpy[r] == 1 else cusNum
+            while r-l + 1 == minutes:
+                maxx = max(maxx,cusNum)
+                cusNum = cusNum - customers[l] if grumpy[l] == 1 else cusNum
+                l+=1
+        
+        return totalCus+maxx
 
-        for idx in range(1, len(customers)):
-            if grumpy[idx] == 1:
-                prefix[idx] = prefix[idx-1] + customers[idx]
-            else:
-                prefix[idx] = prefix[idx-1]
-
-        ans = 0
-        for idx in range(len(prefix)):
-            
-            total_idx = idx + minutes - 1
-            right_part = prefix[total_idx] if total_idx < len(prefix) else 0
-            left_part = prefix[idx-1] if idx - 1 >= 0 else 0
-            ans = max(ans, right_part-left_part)
-
-        return ans + already_satisfied
