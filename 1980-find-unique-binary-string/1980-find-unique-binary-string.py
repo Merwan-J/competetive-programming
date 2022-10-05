@@ -1,21 +1,16 @@
 class Solution:
     def findDifferentBinaryString(self, nums: List[str]) -> str:
-        nums = set(nums)
-        check = False
-        unique = ""
+        
+        numsset = set(nums)
+        self.ans = "" # assuming you submit it in leetcode 
+        def backTrack(s,target_len):
+            if len(s) == target_len:
+                if s not in numsset:
+                    self.ans = s
+                return
 
-        def dfs(n, curstring): # n = 3
-            nonlocal check, unique
-            if n == 0:
-                if curstring not in nums: 
-                    check = True
-                    unique = curstring
-                return 
+            backTrack(s+"0",target_len)
+            backTrack(s+"1",target_len)
 
-            if not check:
-                dfs(n - 1, curstring + "1")
-            if not check:
-                dfs(n - 1, curstring + "0")
-
-        dfs(len(nums), "")
-        return unique
+        backTrack("",len(nums))
+        return self.ans
