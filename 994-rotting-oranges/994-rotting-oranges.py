@@ -1,47 +1,36 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        freshcount = 0
-        time = 0
-        rotten = collections.deque([])
-        fresh = []
+        row,col = len(grid),len(grid[0])
+        time,fresh = 0,0
         
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                if grid[row][col]==1:
-                    freshcount += 1
-                    fresh.append((row,col))
-                elif grid[row][col] == 2:
-                    rotten.append((row,col))
-
-        while rotten:
-            temp = []
-            
-            while rotten:
-                r,c = rotten.popleft()
-                
-                for i,j in [(1,0),(-1,0),(0,1),(0,-1)]:
-                    if (r+i,c+j) in fresh and grid[r+i][c+j]==1:
-                        grid[r+i][c+j] = 2
-                        temp.append((r+i,c+j))
-                        
-            if temp:
-                time += 1
-                freshcount -= len(temp)
-                rotten = collections.deque(temp)
-            
+        rottens = deque([])
         
-        if freshcount>0:
-            return -1
-        
-        return time
-                
-                
-            
-        
-        
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == 2:
+                    rottens.append((r,c,0))
+                elif grid[r][c] == 1:
+                    fresh+=1
                     
         
-    
+        def isValid(r,c):
+            return not(r == row or r<0 or c == col or c<0)
         
-       
+        while rottens:
+            r,c,level = rottens.popleft()
             
+            for d1,d2 in [(1,0),(0,1),(-1,0),(0,-1)]:
+                nr,nc = r+d1,c+d2
+                if isValid(nr,nc) and grid[nr][nc] == 1:
+                    time = max(time,level+1)
+                    grid[nr][nc] = 2
+                    rottens.append((nr,nc,level+1))
+                    fresh-=1
+        
+        if fresh>0:
+            return -1
+        return time
+                    
+            
+            
+        
