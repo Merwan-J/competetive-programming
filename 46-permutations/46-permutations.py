@@ -1,17 +1,21 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        self.ans = []
         
-        def dfs(s):
-            if len(s) == len(nums):
-                self.ans.append(s.copy())
+        
+        
+        ans,path = [],[]
+        
+        def dfs():
+            if len(path) == len(nums):
+                ans.append(path.copy())
                 return
             
             for num in nums:
-                if num not in s:
-                    s.append(num)
-                    dfs(s)
-                    s.pop()
-            
-        dfs([])
-        return self.ans
+                if num not in path:
+                    path.append(num)
+                    dfs()
+                    path.pop()
+        
+        
+        dfs()
+        return ans
