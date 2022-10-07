@@ -3,18 +3,19 @@ class Solution:
         n = len(graph)
         ans = []
         
-        def backtrack(node,path):
+        q = deque([(0,[0])])
+        
+        
+        while q:
+            node,path = q.popleft()
+            
             if node == n-1:
-                ans.append(list(path))
-                return 
+                ans.append(path)
             
             for adj in graph[node]:
-                path.append(adj)
-                backtrack(adj,path)
-                path.pop()
-        
-        
-        backtrack(0,[0])
+                q.append((adj,path+[adj]))
         
         return ans
+        
+        
                 
