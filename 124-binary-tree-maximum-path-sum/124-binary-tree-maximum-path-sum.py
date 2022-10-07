@@ -8,7 +8,7 @@ class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
         self.ans = -inf
         
-        @cache
+        
         def dfs(node):
             if node is None:
                 return -inf
