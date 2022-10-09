@@ -3,29 +3,27 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        visited = []
-        def isValid(row,col):
-            return row>=0 and col>= 0 and row<len(board) and col<len(board[0])
+        row,col = len(board),len(board[0])
         
-        def dfs(row,col):
-            if not isValid(row,col) or board[row][col] != 'O':
+        visited = set()
+        
+        def dfs(r,c):
+            if r<0 or c<0 or r == row or col == c or board[r][c] == "X" or (r,c) in visited:
                 return
-            board[row][col] = 'M'
-            
-            dfs(row+1,col)
-            dfs(row-1,col)
-            dfs(row,col+1)
-            dfs(row,col-1)
-
-            
-        for row in range(len(board)):
-            for col in range(len(board[0])):
-                if board[row][col] == 'O' and (row in [0,len(board)-1] or col in [0,len(board[-1])-1]):
-                    dfs(row,col)
-        for row in range(len(board)):
-            for col in range(len(board[0])):
-                if board[row][col] == 'M':
-                    board[row][col] = "O"
-                elif board[row][col] == 'O':
-                    board[row][col] = "X"
+            board[r][c] = ""
+            visited.add((r,c))
+            for dr,dc in [(1,0),(-1,0),(0,1),(0,-1)]: dfs(r+dr,c+dc)
+                
         
+        for r in range(row):
+            for c in range(col):
+                if (r == 0 or r == row-1 or c == 0 or c == col-1) and board[r][c] == "O":
+                    dfs(r,c)
+        
+        
+        for r in range(row):
+            for c in range(col):
+                if board[r][c] == "":
+                    board[r][c] = "O"
+                elif board[r][c] == "O":
+                    board[r][c] ="X"
