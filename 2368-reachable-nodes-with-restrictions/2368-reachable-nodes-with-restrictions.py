@@ -10,14 +10,31 @@ class Solution:
             graph[v].append(u)
         
         
-        def dfs(node,prev):
-            visited.add(node)
-            for adj in graph[node]:
-                if adj != prev and adj not in visited:
-                    dfs(adj,node)
+#         def dfs(node,prev):
+#             visited.add(node)
+#             for adj in graph[node]:
+#                 if adj != prev and adj not in visited:
+#                     dfs(adj,node)
         
-        visited = set()
-        dfs(0,-1)
+#         visited = set()
+#         dfs(0,-1)
         
-        return len(visited)
+#         return len(visited)
+
+        ans = 0
+        q = deque([(0,-1)])
+        
+        while q:
+            n = len(q)
+            ans+=n
+            for _ in range(n):
+                node,prev = q.popleft()
+                for adj in graph[node]:
+                    if adj != prev:
+                        q.append((adj,node))
+            
+        
+        return ans
+        
+        
         
