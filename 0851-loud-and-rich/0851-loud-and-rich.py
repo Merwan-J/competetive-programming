@@ -1,29 +1,29 @@
 class Solution:
     def loudAndRich(self, richer: List[List[int]], quiet: List[int]) -> List[int]:
         
-        n = len(quiet)
-        
+        n = len(quiet) 
         graph = [[] for _ in range(n)]
+        indegree = [0]*n
+        ans = [i for i in range(n)]
         
         for u,v in richer:
-            graph[v].append(u)
+            graph[u].append(v)
+            indegree[v]+=1
         
-        
-        memo = {}
-        def dfs(node,quiet):
-            if node in memo:
-                return memo[node]
-            ans = node
+        q = deque([])
+        for node,val in enumerate(indegree):
+            if val == 0:
+                q.append(node)
             
+        while q:
+            node = q.popleft()
             for adj in graph[node]:
-                call = dfs(adj,quiet)
-                ans = call if quiet[call]<quiet[ans] else ans
-            memo[node] = ans
-            return ans
-        
-        ans = []
-        
-        for node in range(n):
-            ans.append(dfs(node,quiet))
+                indegree[adj]-=1
+                if quiet[ans[node]]<quiet[ans[adj]]:
+                    ans[adj] = ans[node]
+                if indegree[adj] == 0:
+                    q.append(adj)        
         
         return ans
+        
+        
