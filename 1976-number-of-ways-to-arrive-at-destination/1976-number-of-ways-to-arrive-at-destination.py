@@ -18,7 +18,7 @@ class Solution:
         
         while heap:
             cost,node = heappop(heap) 
-            if node == dest: continue
+            if node == dest: return count[dest]%mod
             for adj,w in graph[node]:
                 if cost+w < time[adj]:
                     heappush(heap,(cost+w,adj))
@@ -27,7 +27,6 @@ class Solution:
                 elif cost+w == time[adj]:
                     count[adj]+=count[node]
         
-        return count[dest]%mod
         
         
         
