@@ -2,30 +2,25 @@ class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         
         
-#         @cache
-#         def dp(target):
-#             if target == 0:
-#                 return 0
+        @cache
+        def dp(i,target):
+            if target == 0:
+                return 0
             
-#             ans = inf
+            if i == 0:
+                return target//coins[i] if target%coins[i] == 0 else inf
             
-#             for coin in coins:
-#                 if target<0:
-#                     ans = min(ans,1 + dp(target-coin))
+            not_pick = dp(i-1,target)
+            pick = inf
             
-#             return ans
+            if target-coins[i]>-1:
+                pick = 1 + dp(i,target-coins[i])
+            
+            return min(not_pick,pick)
         
-#         ans = dp(amount)
+        ans = dp(len(coins)-1,amount)
         
-#         return -1 if ans == inf else ans
+        return -1 if ans == inf else ans
         
-        dp = [inf]*(amount+1)
-        dp[0] = 0
         
-        for cur in range(1,amount+1):
-            for coin in coins:
-                if cur-coin>=0:
-                    dp[cur] = min(dp[cur],dp[cur-coin] + 1)
-        
-        return -1 if dp[amount] == inf else dp[amount]
         
