@@ -1,45 +1,17 @@
 class Solution:
-    def checkIfPrerequisite(self, numCourses: int, prereq: List[List[int]], queries: List[List[int]]) -> List[bool]:
+    def checkIfPrerequisite(self, n: int, prereq: List[List[int]], queries: List[List[int]]) -> List[bool]:
         
-        outdegree = collections.defaultdict(set)
-        for i in range(len(prereq)):
-            req = prereq[i][0]
-            course = prereq[i][1]
-            
-            outdegree[req].add(course)
         
-        # print(outdegree)
+        connected = [[False]*n for _ in range(n)]
         
-        indirect = {}
+        for u,v in prereq:
+            connected[u][v] = True
         
-        def dfs(node):
-            if not outdegree[node]:
-                indirect[node] = set()
-                return indirect[node]
-            
-            if node in indirect:
-                return indirect[node]
-            
-            ans = outdegree[node].copy()
-            
-            for course in outdegree[node]:
-                ans.update(dfs(course))
-            
-            indirect[node] = ans
-            
-            return indirect[node]
         
-        for course in range(numCourses):
-            dfs(course)
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    connected[i][j] = connected[i][j] or (connected[i][k] and connected[k][j])
         
-        ans = []
-        for req,course in queries:
-            if course in indirect[req]:
-                ans.append(True)
-            else:
-                ans.append(False)
         
-        return ans
-            
-                
-            
+        return [connected[i][j] for i,j in queries]
