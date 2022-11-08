@@ -5,9 +5,7 @@ class Solution:
         def dfs(i,j,count,h,m):
             if count == 0:
                 minute = str(m)
-                if len(minute) == 1:
-                    minute = "0"+minute
-                ans.add(str(h)+":"+minute)
+                ans.add(str(h)+":"+"0"*(m<10)+str(m))
                 return
             
             if i >= 4 and j>=6:
