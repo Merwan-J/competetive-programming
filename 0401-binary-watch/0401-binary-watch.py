@@ -4,7 +4,6 @@ class Solution:
         
         def dfs(i,j,count,h,m):
             if count == 0:
-                minute = str(m)
                 ans.add(str(h)+":"+"0"*(m<10)+str(m))
                 return
             
