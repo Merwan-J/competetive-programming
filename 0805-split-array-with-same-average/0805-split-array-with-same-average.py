@@ -20,7 +20,7 @@ class Solution:
             
             return ans
         
-        
+#         for each possible partition check if their sum is possible(not a float) and call the dfs to check if it is possible to create such partition
         for size in range(1,n):
             if (total*size)%n == 0 and dfs(0,(total*size)//n,size):
                 return True
