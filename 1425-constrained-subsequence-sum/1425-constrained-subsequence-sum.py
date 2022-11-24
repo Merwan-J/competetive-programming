@@ -19,11 +19,10 @@ class Solution:
         
 #         I think in the relation putting prevMax results a probelm 
 #         prove: here u go
-#         [10,2,-10,-5,-20]
+#         [10,2,-10,-5,-20] k =2
         
 #         [10,10,10,10,10] max sum for each window
             
-#         [10,-2,-10,-5,20], k = 2
         
 #         so I need to change the way I am looking at the probelm because the realtion doesn't           work specially the prevMax thing
         
@@ -54,12 +53,23 @@ class Solution:
         dp[0] = nums[0]
         
         
-        for i in range(1,n):
-            while heap[0][1]<(i-k):
-                heappop(heap)
-            dp[i] = nums[i] + max(0,-heap[0][0])
-            heappush(heap,(-dp[i],i))
+        # for i in range(1,n):
+        #     while heap[0][1]<(i-k):
+        #         heappop(heap)
+        #     dp[i] = nums[i] + max(0,-heap[0][0])
+        #     heappush(heap,(-dp[i],i))
         
+        dq = deque([0])
+        for i in range(1,n):
+            num = nums[i]
+            while dq[0]<i-k:
+                dq.popleft()
+            dp[i] = num + max(0,dp[dq[0]])
+            
+            while dq and dp[i]>dp[dq[-1]]:
+                dq.pop()
+            dq.append(i)
+
         return max(dp)
         
         
