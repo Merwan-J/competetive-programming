@@ -29,38 +29,64 @@ class Solution:
 #         what are the conditions for shrinking:
 #             shrink my window to the right as long as:
 #                 - I left out one of the extremes and the new formed extremes diff is less than the limit 
+#         n = len(nums)
+#         maxHeap = []
+#         minHeap = []
+#         maxSize = 0
+#         deleted = set()
+#         l = 0
+        
+#         for r in range(n):
+#             heappush(maxHeap,(-nums[r],r))
+#             heappush(minHeap,(nums[r],r))
+            
+#             # do the shrinking
+#             while maxHeap and minHeap and abs(minHeap[0][0]+maxHeap[0][0])>limit:
+#                 deleted.add(l)
+#                 l+=1
+                
+#                 while maxHeap and  maxHeap[0][1] in deleted:
+#                     heappop(maxHeap)
+#                 while minHeap and minHeap[0][1] in deleted:
+#                     heappop(minHeap)
+            
+#             maxSize = max(maxSize,r-l+1)
+        
+#         return maxSize
+        
+
         n = len(nums)
-        maxHeap = []
-        minHeap = []
+        inc_dq = deque([])
+        dec_dq = deque([])
         maxSize = 0
-        deleted = set()
         l = 0
         
         for r in range(n):
-            heappush(maxHeap,(-nums[r],r))
-            heappush(minHeap,(nums[r],r))
+            num = nums[r]
             
-            # do the shrinking
-            while maxHeap and minHeap and abs(minHeap[0][0]+maxHeap[0][0])>limit:
-                deleted.add(l)
+            # keep inc monotonicity
+            while inc_dq and nums[inc_dq[-1]]>num:
+                inc_dq.pop()
+            # keep dec monotonicity
+            while dec_dq and nums[dec_dq[-1]]<num:
+                dec_dq.pop()
+                
+            inc_dq.append(r)
+            dec_dq.append(r)
+            
+            # check the difference is less than or equal to limit
+            while nums[dec_dq[0]]-nums[inc_dq[0]]>limit:
                 l+=1
-                
-                while maxHeap and  maxHeap[0][1] in deleted:
-                    heappop(maxHeap)
-                while minHeap and minHeap[0][1] in deleted:
-                    heappop(minHeap)
-                
-                
-            
+                while dec_dq[0]<l:
+                    dec_dq.popleft()
+                while inc_dq[0]<l:
+                    inc_dq.popleft()
+                    
             maxSize = max(maxSize,r-l+1)
         
         return maxSize
-        
-
-
-
-
-
+            
+            
 
 
 
