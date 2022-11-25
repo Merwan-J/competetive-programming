@@ -12,7 +12,8 @@ class Solution:
             leftMax[i] = stack[-1]
             stack.append(i)
         
-        ans = 0
+        ans = 0        
+        
         for i,num in enumerate(arr):
             ans+= (i-leftMax[i])*(rightMax[i]-i)*num
             ans%=mod
