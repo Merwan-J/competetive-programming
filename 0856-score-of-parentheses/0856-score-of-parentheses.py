@@ -23,9 +23,9 @@ class Solution:
                 cur = 0
                 while stack and stack[-1]!="(":
                     cur+=stack.pop()
-                if stack:
-                    stack.pop()
-                    cur = 2 * cur
+                # if stack:
+                stack.pop()
+                cur = 2 * cur
                 stack.append(cur)
                 
         return sum(stack)
