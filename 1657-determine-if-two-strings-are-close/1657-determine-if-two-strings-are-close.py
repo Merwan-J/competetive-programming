@@ -3,4 +3,4 @@ class Solution:
         counter1 = Counter(word1)
         counter2 = Counter(word2)
 
-        return sorted(counter1.values()) == sorted(counter2.values()) and sorted(counter1.keys()) == sorted(counter2.keys())
+        return sorted(counter1.values()) == sorted(counter2.values()) and set(counter1.keys()) == set(counter2.keys())
