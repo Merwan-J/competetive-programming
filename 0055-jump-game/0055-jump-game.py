@@ -44,24 +44,38 @@ class Solution:
         [1,0,]
         
         """ 
+#         n = len(nums)
+#         sweep = [0]*n
+#         sweep[0] = 1
+        
+#         for i in range(n-1):
+#             jump = nums[i]
+#             start = i+1
+#             end = start+jump
+            
+#             sweep[start] += 1
+#             if end<n:
+#                 sweep[end] -= 1
+        
+#         psum = [0]
+#         for i in range(1,n):
+#             psum.append(psum[-1]+sweep[i])
+        
+#         return all(psum[1:])
+
+
         n = len(nums)
-        sweep = [0]*n
-        sweep[0] = 1
+        prevJump = 1
         
         for i in range(n-1):
-            jump = nums[i]
-            start = i+1
-            end = start+jump
+            curJump = nums[i]
             
-            sweep[start] += 1
-            if end<n:
-                sweep[end] -= 1
+            prevJump-=1
+            prevJump = max(prevJump,curJump)
+            
+            if prevJump == 0:
+                return False
         
-        psum = [0]
-        for i in range(1,n):
-            psum.append(psum[-1]+sweep[i])
-        # print(psum)
-        return all(psum[1:])
-        
+        return True
         
         
