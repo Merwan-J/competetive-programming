@@ -23,8 +23,7 @@ class Solution:
         for i in range(1,2*n):
             add = 0 if circular_diff[i] >=0 else 1
             negatives.append(negatives[-1] + add)
-        # print(circular_diff)
-        # print(negatives)
+        
         for i in range(n):
             start = i
             end = i + n-1
