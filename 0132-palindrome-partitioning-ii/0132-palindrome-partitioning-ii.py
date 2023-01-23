@@ -2,14 +2,15 @@ class Solution:
     def minCut(self, s: str) -> int:
         
         
-        memo = {}
+        # memo = {}
         
+        @lru_cache(None)
         def checkPalindrome(start,end):
             if start>end:
                 return True
             
-            if (start,end) in memo:
-                return memo[(start,end)]
+#             if (start,end) in memo:
+#                 return memo[(start,end)]
             
             ans = False
             if s[start]!=s[end]:
@@ -17,7 +18,7 @@ class Solution:
             else:
                 ans = checkPalindrome(start+1,end-1)
             
-            memo[(start,end)] = ans
+            # memo[(start,end)] = ans
             return ans
         
         
