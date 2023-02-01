@@ -10,14 +10,11 @@ class Solution:
         for r in range(n):
             if blocks[r] == "W":
                 white+=1
-            
-            while r-l+1>k:
-                if blocks[l] == "W":
-                    white-=1
-                l+=1
                 
             if r-l+1 == k: 
                 ans = min(ans,white)
+                white -= blocks[l] == "W"
+                l+=1
         
         return ans
             
