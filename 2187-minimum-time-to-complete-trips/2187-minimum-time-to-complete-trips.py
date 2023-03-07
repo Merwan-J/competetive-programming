@@ -10,7 +10,7 @@ class Solution:
         
         
         l = 1
-        r = 10**20
+        r = min(time)*totalTrips
         ans = -1
         
 
