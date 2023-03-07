@@ -1,21 +1,23 @@
 class Solution:
-    def atMostKDistinct(self, nums, k):
-        hashmap = {}
-        subarrays = 0
-        start, end = 0, 0
-        while end < len(nums):
-            if nums[end] in hashmap:
-                hashmap[nums[end]] += 1
-            else:
-                hashmap[nums[end]] = 1
-            while len(hashmap) > k:
-                hashmap[nums[start]] -= 1
-                if hashmap[nums[start]] == 0:
-                    del hashmap[nums[start]]
-                start += 1
-            subarrays += end-start+1
-            end += 1
-        return subarrays
-    
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
-        return self.atMostKDistinct(nums, k) - self.atMostKDistinct(nums, k-1)
+        
+        def atmostK(k):
+            l = 0
+            count = 0
+            hmap = {}
+            
+            for r in range(len(nums)):
+                cur = nums[r]
+                hmap[cur] = hmap.get(cur,0) + 1
+                
+                while len(hmap)>k and l<=r:
+                    hmap[nums[l]] -= 1
+                    if hmap[nums[l]] == 0: 
+                        del hmap[nums[l]]
+                    l+=1
+                
+                count += r-l+1
+            
+            return count 
+        
+        return atmostK(k)-atmostK(k-1)
