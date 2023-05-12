@@ -1,6 +1,7 @@
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
         
+        @cache
         def findTheWinner(l,r,turn):
             if l>r:
                 return 0
