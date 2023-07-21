@@ -3,18 +3,16 @@ class Solution:
         if len(arr) <= 1:
             return arr
 
-        idx = -1
-        for i in range(len(arr) - 1, 0, -1):
-            if arr[i] < arr[i - 1]:
-                idx = i - 1
+        for j in range(len(arr) - 2, -1, -1):
+            if arr[j] > arr[j + 1]:
                 break
 
-        if idx == -1:
+        if j == -1:
             return arr
 
-        for i in range(len(arr) - 1, idx, -1):
-            if arr[i] < arr[idx] and arr[i] != arr[i - 1]:
-                arr[i], arr[idx] = arr[idx], arr[i]
+        for i in range(len(arr) - 1, j, -1):
+            if arr[i] < arr[j] and arr[i] != arr[i - 1]:
+                arr[i], arr[j] = arr[j], arr[i]
                 break
 
         return arr
