@@ -1,35 +1,38 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        def twoSum(num,i,ans):
-            l = i+1
-            r = len(nums)-1
-            
-            while l<r:
-                if -nums[l] - nums[r] > num:
-                    l+=1
-                elif -nums[l] - nums[r] < num:
-                    r-=1
-                else:
-                    ans.append([num,nums[l],nums[r]])
-                    l+=1
-                    r-=1
-                    
-                    while l<len(nums) and nums[l] == nums[l-1]:
-                        l+=1
-        
         nums.sort()
         ans = []
+        n = len(nums)
+        i = 0
         
-        # fix every num as i and look for j and k
-        # look for j and k as what you would for the two sum, using two pointers 
-        # look out for duplicates
-        
-        seen = set()
-        
-        for i, num in enumerate(nums):
-            if num not in seen:
-                twoSum(num,i,ans)
-                seen.add(num)
-        
+        while i<n-2 and nums[i]<1:
+            j,k = i+1,n-1
+            
+            while j<k:
+                total = nums[i] + nums[j] + nums[k]
+                if total == 0:
+                    ans.append([nums[i],nums[j],nums[k]])
+                    j+=1
+                    k-=1
+                    
+                    while j<n and nums[j] == nums[j-1]:
+                        j+=1
+                    
+                    while k>i and nums[k] == nums[k+1]:
+                        k-=1
+                elif total<0:
+                    j+=1
+                else:
+                    k-=1
+            i+=1
+            
+            while i<n and nums[i] == nums[i-1]:
+                i+=1
                 
-        return ans
+            
+        return ans 
+                    
+
+        
+        [-1,-1,0,1]
+                        
