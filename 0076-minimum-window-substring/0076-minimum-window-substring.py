@@ -1,41 +1,30 @@
 class Solution:
-    def counter(self,s):
-        ans = defaultdict(int)
-
-        for char in s:
-            ans[char] += 1
-
-        return ans
-    
-    def contains(self,window,target):
-        for key,val in target.items():
-            if window[key]<val:
-                return False
-        return True
-    
-    def minWindow(self, s: str, t: str) -> str: 
+    def minWindow(self, s: str, t: str) -> str:
+        def check(counter,target):
+            # print(counter,target)
+            for key,val in target.items():
+                if counter[key]<val:
+                    # print('false')
+                    return False
+            # print("true")
+            return True 
+        
+        
         n = len(s)
-        target = self.counter(t)
-        l = 0
-        size = inf
-        start,end = 0,0
         window = defaultdict(int)
+        target = Counter(t)
+        ans = [0,0]
+        found = False
+        l = 0
         
         for r in range(n):
-            window[s[r]]+=1
-            while self.contains(window,target):
-                if r-l+1<size:
-                    size = r-l+1
-                    start,end = l,r+1
+            window[s[r]] += 1
+            
+            while l<=r and check(window,target):
+                if not found or ans[1]-ans[0]+1>r-l+1:
+                    found = True
+                    ans = [l,r]
                 window[s[l]]-=1
-                if window[s[l]] == 0:
-                    del window[s[l]]
-                l+=1
+                l+=1 
         
-        return s[start:end]
-        
-            
-                
-        
-        
-            
+        return s[ans[0]:ans[1]+1] if found else ""
