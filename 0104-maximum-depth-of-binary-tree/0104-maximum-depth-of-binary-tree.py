@@ -7,14 +7,24 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         
-        
-        def dfs(node):
-            if node is None:
-                return 0 
+        if root is None:
+            return 0
             
-            right = dfs(node.right)
-            left = dfs(node.left)
-            
-            return 1 + max(right,left)
+                    
+        q = [root]
+        level = 0 
         
-        return dfs(root)
+        while q:
+            n = len(q)
+            children = []
+            
+            for _ in range(n):
+                node = q.pop()
+                if node.right: children.append(node.right)
+                if node.left: children.append(node.left)
+            q = children 
+            level+=1
+        
+        return level
+        
+        
