@@ -8,16 +8,16 @@ class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         
         
-        def dfs(p,q):
+        def check(p,q): 
             if p == q == None:
-                return True
+                return True 
             
-            if not p or not q:
+            if not (p and q):
                 return False
             
             if p.val != q.val:
-                return False
+                return False 
             
-            return dfs(p.left,q.left) and dfs(p.right,q.right)
+            return check(p.left,q.left) and check(p.right,q.right)
         
-        return dfs(p,q)
+        return check(p,q)
