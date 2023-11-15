@@ -7,11 +7,15 @@
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
         
-        def dfs(node,maxx):
+        def dfs(node,pathMax):
             if node is None:
-                return 0
-            ans = 0 if node.val <maxx else 1
-            maxx = max(node.val,maxx)
-            return ans + dfs(node.right,maxx) + dfs(node.left,maxx)
+                return 0 
+            
+            curMax = max(pathMax,node.val)
+            ans = dfs(node.right,curMax) + dfs(node.left,curMax)
+            
+            if node.val == curMax: ans+=1
+            
+            return ans 
         
-        return dfs(root,float('-inf'))
+        return dfs(root,root.val)
