@@ -8,50 +8,29 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         
-#         self.anc = None
-#         def dfs(node):
-#             if node is None:
-#                 return False
-                        
-#             left = dfs(node.left)
-#             right = dfs(node.right)
-#             cur = node == q or node == p
-            
-#             if cur + right + left == 2:
-#                 self.anc = node
-            
-#             return left or right or cur
         
-#         dfs(root)
-#         return self.anc
-
-        parent = {}
-    
-        def dfs(node,p):
+        parent = defaultdict(TreeNode)
+        
+        def buildGraph(node,parentNode):
             if node is None:
                 return 
-            parent[node] = p
             
-            dfs(node.right,node)
-            dfs(node.left,node)
+            parent[node] = parentNode
+            
+            buildGraph(node.right,node)
+            buildGraph(node.left,node)
             
         
-        dfs(root,None)
+        buildGraph(root,None)
         
-        ancestors = set()
-        ancestors.add(q)
-        
+        qPath = set()
         while q:
-            ancestors.add(parent[q])
+            qPath.add(q)
             q = parent[q]
         
-        while p not in ancestors:
+        while p not in qPath:
             p = parent[p]
         
-        return p
+        return p 
         
-        
             
-            
-            
-                
